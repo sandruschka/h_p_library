@@ -4,13 +4,11 @@ part 'offer_model.g.dart';
 
 @JsonSerializable()
 class Offer {
-  List<Offer>? offers;
   String? type;
   String? sliceValue;
-  String? value;
+  int? value;
 
   Offer({
-    this.offers,
     this.type,
     this.sliceValue,
     this.value,

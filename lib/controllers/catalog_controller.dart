@@ -24,15 +24,6 @@ class CatalogController {
     });
   }
 
-  void getOffers(List<String?>? isbn) {
-    if (isbn == null) return;
-    catalogService.getOffers(isbn.join(',')).then((offer) {
-      _offerSubject.add(offer);
-    }).catchError((error) {
-      _offerSubject.addError(error);
-    });
-  }
-
   dispose() {
     _booksSubject.close();
     _offerSubject.close();

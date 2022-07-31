@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:h_p_library/controllers/catalog_controller.dart';
 import 'package:h_p_library/di/global_providers.dart';
@@ -5,29 +6,35 @@ import 'package:h_p_library/models/book_model.dart';
 import 'package:h_p_library/widgets/molecules/catalog_card_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
-class CatalogView extends StatefulWidget {
-  const CatalogView({Key? key}) : super(key: key);
-
-  @override
-  State<CatalogView> createState() => _CatalogViewState();
-}
-
-class _CatalogViewState extends State<CatalogView> {
+class CatalogView extends StatelessWidget {
+  CatalogView({Key? key}) : super(key: key);
   final CatalogController catalogController = getIt<CatalogController>()
     ..getCatalog();
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Catalog View'),
-          automaticallyImplyLeading: false,
+        appBar: AppBar(),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                child: CachedNetworkImage(
+                  imageUrl:
+                      'https://i.pinimg.com/originals/53/47/47/534747ec44bc8ba510aeec3532693834.png',
+                ),
+              ),
+              ListTile(
+                title: const Text('Gryffindor'),
+                trailing: Switch(
+                  value: true,
+                  onChanged: (value) {},
+                ),
+              )
+            ],
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),

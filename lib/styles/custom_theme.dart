@@ -2,9 +2,37 @@ import 'package:flutter/material.dart';
 
 class CustomTheme {
   static ThemeData themeData(BuildContext context) {
+    final colorTheme = Theme.of(context).colorScheme;
     final ThemeData base = ThemeData.light();
     return base.copyWith(
-      primaryColor: Colors.black,
+      colorScheme: const ColorScheme(
+        brightness: Brightness.light,
+        primary: Color.fromRGBO(116, 0, 1, 1),
+        onPrimary: Colors.white,
+        secondary: Color.fromRGBO(238, 186, 48, 1),
+        onSecondary: Colors.black,
+        error: Color.fromRGBO(174, 0, 1, 1),
+        onError: Colors.white,
+        background: Color.fromRGBO(192, 192, 192, 1),
+        onBackground: Colors.black,
+        surface: Colors.white,
+        onSurface: Colors.black,
+      ),
+      splashColor: Colors.transparent,
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: Colors.white,
+        unselectedItemColor: Color.fromRGBO(182, 137, 0, 1),
+        selectedLabelStyle:
+            TextStyle(color: Color.fromRGBO(238, 186, 48, 1), fontSize: 16),
+        unselectedLabelStyle: TextStyle(
+          color: Color.fromRGBO(238, 186, 48, 1),
+        ),
+        selectedItemColor: Color.fromRGBO(182, 137, 0, 1),
+        selectedIconTheme:
+            IconThemeData(color: Color.fromRGBO(182, 137, 0, 1), size: 28),
+        unselectedIconTheme:
+            IconThemeData(color: Color.fromRGBO(182, 137, 0, 1), size: 24),
+      ),
     );
   }
 }

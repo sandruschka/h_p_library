@@ -1,13 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:h_p_library/controllers/catalog_controller.dart';
+import 'package:h_p_library/controllers/cart_controller.dart';
 import 'package:h_p_library/di/global_providers.dart';
 import 'package:h_p_library/models/book_model.dart';
 import 'package:h_p_library/models/cart_model.dart';
-import 'package:h_p_library/models/offer_model.dart';
-import 'package:h_p_library/widgets/atoms/increment_counter_widget.dart';
+import 'package:h_p_library/models/offers_model.dart';
 import 'package:provider/provider.dart';
-import 'package:rive/rive.dart';
 
 class CartView extends StatefulWidget {
   const CartView({Key? key}) : super(key: key);
@@ -17,7 +15,7 @@ class CartView extends StatefulWidget {
 }
 
 class _CartViewState extends State<CartView> {
-  final CatalogController catalogController = getIt<CatalogController>();
+  final CartController cartController = getIt<CartController>();
 
   @override
   void initState() {
@@ -30,14 +28,12 @@ class _CartViewState extends State<CartView> {
       (cart) => cart.books,
     );
 
-    catalogController.getOffers(books.map((e) => e.isbn).toList());
+    if (books.isNotEmpty) {
+      cartController.getOffers(books.map((e) => e.isbn).toList());
+    }
 
-    if (books.length == 0) {
-      return Center(
-        child: RiveAnimation.network(
-          'https://cdn.rive.app/animations/vehicles.riv',
-        ),
-      );
+    if (books.isEmpty) {
+      return const Center();
     }
     return SafeArea(
       child: Scaffold(
@@ -52,16 +48,24 @@ class _CartViewState extends State<CartView> {
               Expanded(
                 child: ListView.separated(
                   itemBuilder: (context, index) {
+                    Book book = books[index];
                     return Card(
                       elevation: 2,
                       child: ListTile(
-                        leading: CachedNetworkImage(
-                            imageUrl: books[index].cover ?? ''),
-                        title: Text(books[index].title ?? ''),
-                        trailing: IncrementCounter(
-                          onIncrement: () {},
-                          onDecrement: () {},
-                        ),
+                        leading: CachedNetworkImage(imageUrl: book.cover ?? ''),
+                        title: Text(book.title ?? ''),
+                        /*trailing: Consumer<CartModel>(
+                          builder: (context, cart, child) {
+                            return IncrementCounter(
+                              onIncrement: () {
+                                cart.increaseAmount(book);
+                              },
+                              onDecrement: () {
+                                if (book.amount > 0) cart.decreaseAmount(book);
+                              },
+                            );
+                          },
+                        ),*/
                       ),
                     );
                   },
@@ -71,22 +75,26 @@ class _CartViewState extends State<CartView> {
                   itemCount: books.length,
                 ),
               ),
-              StreamBuilder<Offer?>(
-                stream: catalogController.offer,
+              StreamBuilder<Offers?>(
+                stream: cartController.offers,
                 builder: (context, snapshot) {
-                  Offer? offer = snapshot.data;
-                  if (offer == null) {
+                  Offers? offers = snapshot.data;
+                  print("OFFERS");
+                  print(offers);
+                  print(offers?.offers);
+                  if (snapshot.hasError) return Text("ERROR");
+                  if (offers == null) {
                     return const SizedBox();
                   }
                   return AnimatedOpacity(
                     duration: const Duration(milliseconds: 500),
-                    opacity: offer == null ? 0 : 1,
+                    opacity: 1,
                     child: FractionallySizedBox(
                       widthFactor: 0.8,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("TOTAL"),
+                          const Text("TOTAL"),
                         ],
                       ),
                     ),

@@ -15,7 +15,7 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   int selectedIndex = 0;
 
-  var pages = [const CatalogView(), const CartView()];
+  var pages = [CatalogView(), const CartView()];
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,6 @@ class _MainAppState extends State<MainApp> {
     return Scaffold(
       body: pages[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.pink,
         currentIndex: selectedIndex,
         onTap: (int index) {
           setState(() {
@@ -35,15 +34,19 @@ class _MainAppState extends State<MainApp> {
         },
         items: [
           const BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined, color: Colors.black),
-            label: 'Home',
+            icon: Icon(Icons.store_mall_directory_outlined),
+            activeIcon: Icon(Icons.store),
+            label: 'Store',
           ),
           BottomNavigationBarItem(
+            activeIcon: const Icon(Icons.shopping_bag),
             icon: Badge(
+              badgeColor: Theme.of(context).colorScheme.secondary,
               showBadge: nbBooksInCart > 0,
               badgeContent: Text('$nbBooksInCart'),
               animationType: BadgeAnimationType.scale,
-              child: const Icon(Icons.shopping_cart_outlined),
+              toAnimate: false,
+              child: const Icon(Icons.shopping_bag_outlined),
             ),
             label: 'Cart',
           ),

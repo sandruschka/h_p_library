@@ -20,12 +20,13 @@ class IncrementCounter extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           InkWell(
-              onTap: () {},
-              child: const Icon(
-                Icons.remove,
-                color: Colors.white,
-                size: 24,
-              )),
+            onTap: () => onDecrement(),
+            child: const Icon(
+              Icons.remove,
+              color: Colors.white,
+              size: 24,
+            ),
+          ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 3),
             padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
@@ -37,7 +38,7 @@ class IncrementCounter extends StatelessWidget {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () => onIncrement(),
             child: const Icon(
               Icons.add,
               color: Colors.white,
