@@ -16,6 +16,7 @@ class CatalogView extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(),
+        backgroundColor: Theme.of(context).colorScheme.background,
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
@@ -27,8 +28,9 @@ class CatalogView extends StatelessWidget {
                 ),
               ),
               ListTile(
-                title: const Text('Gryffindor'),
+                title: const Text('Gryffindor Theme'),
                 trailing: Switch(
+                  activeColor: const Color.fromRGBO(238, 186, 48, 1),
                   value: true,
                   onChanged: (value) {},
                 ),
@@ -48,8 +50,8 @@ class CatalogView extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   if (books == null) {
                     return Shimmer.fromColors(
-                      baseColor: Colors.grey.withOpacity(0.2),
-                      highlightColor: Colors.grey.withOpacity(0.1),
+                      baseColor: Colors.grey.withOpacity(0.8),
+                      highlightColor: Colors.grey.withOpacity(0.6),
                       child: Container(
                         height: 200,
                         width: double.infinity,

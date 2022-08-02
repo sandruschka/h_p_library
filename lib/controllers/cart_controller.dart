@@ -26,7 +26,7 @@ class CartController {
     _offersSubject.close();
   }
 
-  calculateBestOffer(List<Offer>? offers, int totalPrice) {
+  double calculateBestOffer(List<Offer>? offers, int totalPrice) {
     double bestOffer = totalPrice.toDouble();
 
     Map<String, double Function(Offer)> offersCalculationMap = {
@@ -60,7 +60,6 @@ class CartController {
         if (reducedPrice < bestOffer) bestOffer = reducedPrice;
       }
     });
-    print("bestoffer");
-    print(bestOffer);
+    return bestOffer;
   }
 }

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class PriceText extends StatelessWidget {
-  final int? price;
-  const PriceText({Key? key, required this.price}) : super(key: key);
+  final num? price;
+  final bool isLineThrough;
+  const PriceText({
+    Key? key,
+    required this.price,
+    this.isLineThrough = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,11 +15,15 @@ class PriceText extends StatelessWidget {
     String? priceAsExponential = price?.toDouble().toStringAsFixed(2);
 
     return Text(
-      priceAsExponential != null
-          ? '$priceAsExponential  €'
-          : 'price unavailable',
-      style:
-          theme.textTheme.bodyText1?.copyWith(color: theme.colorScheme.error),
+      priceAsExponential != null ? '$priceAsExponential€' : 'price unavailable',
+      style: theme.textTheme.bodyText1
+          ?.copyWith(
+              color: isLineThrough
+                  ? Colors.black.withOpacity(0.6)
+                  : theme.colorScheme.error)
+          .copyWith(
+            decoration: isLineThrough ? TextDecoration.lineThrough : null,
+          ),
     );
   }
 }

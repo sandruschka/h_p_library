@@ -15,7 +15,7 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   int selectedIndex = 0;
 
-  var pages = [CatalogView(), const CartView()];
+  var pages = [CatalogView(), CartView()];
 
   @override
   Widget build(BuildContext context) {
