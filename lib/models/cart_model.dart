@@ -9,7 +9,8 @@ class CartModel extends ChangeNotifier {
   List<Book> get books => _books;
 
   /// The current total price of all items.
-  int get totalPrice => books.fold(0, (total, current) => current.price ?? 0);
+  int get totalPrice => books.fold(
+      0, (previousValue, current) => previousValue + (current.price ?? 0));
 
   set increaseAmount(Book book) {
     book.amount++;

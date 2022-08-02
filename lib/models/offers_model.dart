@@ -3,6 +3,12 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'offers_model.g.dart';
 
+enum OfferType {
+  percentage,
+  minus,
+  slice,
+}
+
 @JsonSerializable()
 class Offers {
   List<Offer>? offers;

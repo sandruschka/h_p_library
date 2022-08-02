@@ -1,3 +1,4 @@
+import 'package:h_p_library/models/offer_model.dart';
 import 'package:h_p_library/models/offers_model.dart';
 import 'package:h_p_library/services/catalog_service.dart';
 import 'package:injectable/injectable.dart';
@@ -23,5 +24,43 @@ class CartController {
 
   dispose() {
     _offersSubject.close();
+  }
+
+  calculateBestOffer(List<Offer>? offers, int totalPrice) {
+    double bestOffer = totalPrice.toDouble();
+
+    Map<String, double Function(Offer)> offersCalculationMap = {
+      'percentage': (Offer offer) {
+        if (offer.value == null || offer.value == 0) return 0;
+        double reducedPrice = totalPrice.toDouble();
+        double reduction = totalPrice * (offer.value! / 100).toDouble();
+        reducedPrice -= reduction;
+        print(reducedPrice);
+        return reducedPrice;
+      },
+      'minus': (Offer offer) {
+        if (offer.value == null || offer.value == 0) return 0;
+        double reducedPrice = (totalPrice - offer.value!).toDouble();
+        print(reducedPrice);
+        return reducedPrice;
+      },
+      'slice': (Offer offer) {
+        if (offer.value == null || offer.value == 0) return 0;
+        int nbSlice = totalPrice ~/ 100;
+        double reducedPrice =
+            (totalPrice - (offer.value! * nbSlice)).toDouble();
+        print(reducedPrice);
+        return reducedPrice;
+      }
+    };
+
+    offers?.forEach((element) {
+      if (offersCalculationMap.keys.contains(element.type)) {
+        double reducedPrice = offersCalculationMap[element.type]!(element);
+        if (reducedPrice < bestOffer) bestOffer = reducedPrice;
+      }
+    });
+    print("bestoffer");
+    print(bestOffer);
   }
 }

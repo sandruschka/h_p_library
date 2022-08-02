@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:h_p_library/models/book_model.dart';
 import 'package:h_p_library/models/cart_model.dart';
 import 'package:h_p_library/styles/custom_theme.dart';
+import 'package:h_p_library/widgets/atoms/priceText.dart';
 import 'package:h_p_library/widgets/molecules/book_description_sheet_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -60,16 +61,7 @@ class CatalogCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          '${book.price} €',
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1
-                              ?.copyWith(
-                                  color: Theme.of(context).colorScheme.error),
-                        ),
+                        PriceText(price: book.price),
                         Consumer<CartModel>(
                           builder: (context, cart, child) {
                             bool isInCart = cart.books.contains(book);

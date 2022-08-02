@@ -5,6 +5,8 @@ import 'package:h_p_library/di/global_providers.dart';
 import 'package:h_p_library/models/book_model.dart';
 import 'package:h_p_library/models/cart_model.dart';
 import 'package:h_p_library/models/offers_model.dart';
+import 'package:h_p_library/styles/custom_theme.dart';
+import 'package:h_p_library/widgets/atoms/priceText.dart';
 import 'package:provider/provider.dart';
 
 class CartView extends StatefulWidget {
@@ -24,15 +26,13 @@ class _CartViewState extends State<CartView> {
 
   @override
   Widget build(BuildContext context) {
-    List<Book> books = context.select<CartModel, List<Book>>(
-      (cart) => cart.books,
-    );
+    final cart = context.watch<CartModel>();
 
-    if (books.isNotEmpty) {
-      cartController.getOffers(books.map((e) => e.isbn).toList());
+    if (cart.books.isNotEmpty) {
+      cartController.getOffers(cart.books.map((e) => e.isbn).toList());
     }
 
-    if (books.isEmpty) {
+    if (cart.books.isEmpty) {
       return const Center();
     }
     return SafeArea(
@@ -48,13 +48,30 @@ class _CartViewState extends State<CartView> {
               Expanded(
                 child: ListView.separated(
                   itemBuilder: (context, index) {
-                    Book book = books[index];
+                    Book book = cart.books[index];
                     return Card(
                       elevation: 2,
                       child: ListTile(
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: Spacing.px24,
+                          horizontal: Spacing.px8,
+                        ),
                         leading: CachedNetworkImage(imageUrl: book.cover ?? ''),
-                        title: Text(book.title ?? ''),
-                        /*trailing: Consumer<CartModel>(
+                        title: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(book.title ?? ''),
+                            PriceText(price: book.price),
+                          ],
+                        ),
+                        trailing: IconButton(
+                          padding: EdgeInsets.zero,
+                          icon: const Icon(Icons.close),
+                          onPressed: () {},
+                        ),
+                      ),
+                      /*trailing: Consumer<CartModel>(
                           builder: (context, cart, child) {
                             return IncrementCounter(
                               onIncrement: () {
@@ -66,40 +83,42 @@ class _CartViewState extends State<CartView> {
                             );
                           },
                         ),*/
-                      ),
                     );
                   },
                   separatorBuilder: (context, index) => const SizedBox(
                     height: 4,
                   ),
-                  itemCount: books.length,
+                  itemCount: cart.books.length,
                 ),
               ),
-              StreamBuilder<Offers?>(
-                stream: cartController.offers,
-                builder: (context, snapshot) {
-                  Offers? offers = snapshot.data;
-                  print("OFFERS");
-                  print(offers);
-                  print(offers?.offers);
-                  if (snapshot.hasError) return Text("ERROR");
-                  if (offers == null) {
-                    return const SizedBox();
-                  }
-                  return AnimatedOpacity(
-                    duration: const Duration(milliseconds: 500),
-                    opacity: 1,
-                    child: FractionallySizedBox(
-                      widthFactor: 0.8,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text("TOTAL"),
-                        ],
-                      ),
+              AnimatedOpacity(
+                duration: const Duration(seconds: 1),
+                opacity: 1,
+                child: FractionallySizedBox(
+                  widthFactor: 0.8,
+                  child: Container(
+                    color: Theme.of(context).colorScheme.background,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('TOTAL'),
+                        PriceText(price: cart.totalPrice),
+                        StreamBuilder<Offers?>(
+                          stream: cartController.offers,
+                          builder: (context, snapshot) {
+                            Offers? offers = snapshot.data;
+                            cartController.calculateBestOffer(
+                                offers?.offers, cart.totalPrice);
+                            if (offers == null || snapshot.hasError) {
+                              return const SizedBox();
+                            }
+                            return SizedBox();
+                          },
+                        )
+                      ],
                     ),
-                  );
-                },
+                  ),
+                ),
               )
             ],
           ),
