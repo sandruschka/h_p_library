@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:h_p_library/styles/colors.dart';
 
 class CustomTheme {
   static ThemeData themeData(BuildContext context) {
     final colorTheme = Theme.of(context).colorScheme;
     final ThemeData base = ThemeData.light();
     return base.copyWith(
-      colorScheme: const ColorScheme(
+      colorScheme: ColorScheme(
         brightness: Brightness.light,
-        primary: Color.fromRGBO(116, 0, 1, 1),
+        primary: colorTheme.primaryColor,
         onPrimary: Colors.white,
-        secondary: Color.fromRGBO(238, 186, 48, 1),
+        secondary: colorTheme.secondaryColor,
         onSecondary: Colors.black,
-        error: Color.fromRGBO(174, 0, 1, 1),
+        error: colorTheme.errorColor,
         onError: Colors.white,
-        background: Color.fromRGBO(192, 192, 192, 1),
+        background: colorTheme.backgroundColor,
         onBackground: Colors.black,
         surface: Colors.white,
         onSurface: Colors.black,
       ),
       splashColor: Colors.transparent,
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Colors.white,
-        unselectedItemColor: Color.fromRGBO(182, 137, 0, 1),
+        unselectedItemColor: colorTheme.secondaryDarkColor,
         selectedLabelStyle:
-            TextStyle(color: Color.fromRGBO(238, 186, 48, 1), fontSize: 16),
+            TextStyle(color: colorTheme.secondaryColor, fontSize: 16),
         unselectedLabelStyle: TextStyle(
-          color: Color.fromRGBO(238, 186, 48, 1),
+          color: colorTheme.secondaryColor,
         ),
-        selectedItemColor: Color.fromRGBO(182, 137, 0, 1),
+        selectedItemColor: colorTheme.secondaryDarkColor,
         selectedIconTheme:
-            IconThemeData(color: Color.fromRGBO(182, 137, 0, 1), size: 28),
+            IconThemeData(color: colorTheme.secondaryDarkColor, size: 28),
         unselectedIconTheme:
-            IconThemeData(color: Color.fromRGBO(182, 137, 0, 1), size: 24),
+            IconThemeData(color: colorTheme.secondaryDarkColor, size: 24),
       ),
     );
   }
