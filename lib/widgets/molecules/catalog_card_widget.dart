@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:h_p_library/models/book_model.dart';
 import 'package:h_p_library/models/cart_model.dart';
 import 'package:h_p_library/styles/custom_theme.dart';
-import 'package:h_p_library/widgets/atoms/priceText.dart';
+import 'package:h_p_library/widgets/atoms/price_text.dart';
 import 'package:h_p_library/widgets/molecules/book_description_sheet_widget.dart';
 import 'package:provider/provider.dart';
 

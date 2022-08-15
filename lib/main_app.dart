@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:h_p_library/models/cart_model.dart';
 import 'package:h_p_library/views/cart_view.dart';
@@ -33,10 +34,10 @@ class _MainAppState extends State<MainApp> {
           });
         },
         items: [
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.store_mall_directory_outlined),
-            activeIcon: Icon(Icons.store),
-            label: 'Store',
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.store_mall_directory_outlined),
+            activeIcon: const Icon(Icons.store),
+            label: 'store'.tr(),
           ),
           BottomNavigationBarItem(
             activeIcon: const Icon(Icons.shopping_bag),
@@ -48,7 +49,7 @@ class _MainAppState extends State<MainApp> {
               toAnimate: false,
               child: const Icon(Icons.shopping_bag_outlined),
             ),
-            label: 'Cart',
+            label: 'cart'.tr(),
           ),
         ],
       ),

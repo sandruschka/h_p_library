@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:h_p_library/controllers/cart_controller.dart';
@@ -7,7 +8,7 @@ import 'package:h_p_library/models/book_model.dart';
 import 'package:h_p_library/models/cart_model.dart';
 import 'package:h_p_library/models/offers_model.dart';
 import 'package:h_p_library/styles/custom_theme.dart';
-import 'package:h_p_library/widgets/atoms/priceText.dart';
+import 'package:h_p_library/widgets/atoms/price_text.dart';
 import 'package:provider/provider.dart';
 
 class CartView extends StatelessWidget {
@@ -28,10 +29,10 @@ class CartView extends StatelessWidget {
             const Spacer(flex: 2),
             SvgPicture.asset(
               'assets/images/gone_shopping.svg',
-              semanticsLabel: 'No items in shopping bag image',
+              semanticsLabel: 'no_items_in_cart'.tr(),
             ),
             Text(
-              'Lets go do some shopping!',
+              'let_us_shop'.tr(),
               style: Theme.of(context).textTheme.headline5,
             ),
             const Spacer(),
@@ -41,10 +42,6 @@ class CartView extends StatelessWidget {
     }
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Cart View'),
-          automaticallyImplyLeading: false,
-        ),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Padding(
           padding: EdgeInsets.only(
@@ -98,7 +95,7 @@ class CartView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('TOTAL'),
+                    Text('total_price'.tr().toUpperCase()),
                     Divider(color: Theme.of(context).colorScheme.secondary),
                     StreamBuilder<Offers?>(
                       stream: cartController.offers,
@@ -128,12 +125,11 @@ class CartView extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content: const Text('Currently not available'),
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('currently_unavailable'.tr()),
                         ));
                       },
-                      child: const Text('Go to checkout'),
+                      child: Text('go_to_checkout'.tr()),
                     )
                   ],
                 ),

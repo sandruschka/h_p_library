@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:h_p_library/controllers/catalog_controller.dart';
 import 'package:h_p_library/di/global_providers.dart';
@@ -28,7 +29,7 @@ class CatalogView extends StatelessWidget {
                 ),
               ),
               ListTile(
-                title: const Text('Gryffindor Theme'),
+                title: Text('gryffindor_theme'.tr()),
                 trailing: Switch(
                   activeColor: const Color.fromRGBO(238, 186, 48, 1),
                   value: true,
