@@ -45,10 +45,11 @@ class CartView extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Padding(
           padding: EdgeInsets.only(
-              top: Spacing.px8,
-              left: Spacing.px8,
-              right: Spacing.px8,
-              bottom: 50),
+            top: Spacing.px8,
+            left: Spacing.px8,
+            right: Spacing.px8,
+            bottom: Spacing.px24,
+          ),
           child: Column(
             children: [
               Expanded(
@@ -109,16 +110,17 @@ class CartView extends StatelessWidget {
                         return Row(
                           children: [
                             PriceText(price: bestOffer),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: Spacing.px8,
-                                horizontal: Spacing.px8,
+                            if (cart.totalPrice > bestOffer)
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: Spacing.px8,
+                                  horizontal: Spacing.px8,
+                                ),
+                                child: PriceText(
+                                  price: cart.totalPrice,
+                                  isLineThrough: true,
+                                ),
                               ),
-                              child: PriceText(
-                                price: cart.totalPrice,
-                                isLineThrough: true,
-                              ),
-                            ),
                           ],
                         );
                       },
